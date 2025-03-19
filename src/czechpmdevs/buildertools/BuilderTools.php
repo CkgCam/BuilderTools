@@ -139,8 +139,12 @@ class BuilderTools extends PluginBase {
     }
 
     public function registerItems(): void {
-        StringToItemParser::getInstance()->register("wooden_axe", fn() => VanillaItems::WOODEN_AXE());
+        // Only register if it's not already in the parser
+        if (StringToItemParser::getInstance()->lookup("wooden_axe") === null) {
+            StringToItemParser::getInstance()->register("wooden_axe", fn() => VanillaItems::WOODEN_AXE());
+        }
     }
+
 
     private function sendWarnings(): void {
         if ($this->getServer()->getConfigGroup()->getProperty("memory.async-worker-hard-limit") !== 0) {
